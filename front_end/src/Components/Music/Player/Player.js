@@ -177,7 +177,7 @@ const Progressbar = ({ width, setSeek })=>{
     setCurrentWidth(w)
   }
   return(
-    <div ref={ barRef } className="progress">
+    <div ref={ barRef } className="progress" style={{ border: '1px solid #20c997' }}>
       <div
         className="progress-bar bg-success"
         role="progressbar"

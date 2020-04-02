@@ -9,6 +9,9 @@ const Playlist = ({ album, returnFunc, newIndex })=>{
       axios.get(`http://localhost:3005/song/album/${ album._id }`)
       .then(res=>{
         setSongs(res.data)
+        // setTimeout(()=>{
+        //   returnFunc({...res.data[0], index: 0, total: res.data - 1})
+        // }, 100)
       })
       .catch(err=>{
         console.log(err)
@@ -27,11 +30,19 @@ const Playlist = ({ album, returnFunc, newIndex })=>{
       <div className="card-header bg-success text-white">
         { album.name }
       </div>
-      <div className="card-body" style={{ padding: '5px', height: '400px', overflow: 'auto' }}>
+      <div className="card-body" style={{ padding: '5px', height: '350px', overflow: 'auto' }}>
       <div className="list-group">
         { songs && songs.length>0?
           songs.map((e, i)=>(
-            <span key={ i } onClick={ ()=> returnFunc({...e, index: i, total: songs.length-1}) } className="list-group-item list-group-item-action cursor">{ e.name }</span>
+            <span
+              key={ i }
+              onClick={ ()=> returnFunc({...e, index: i, total: songs.length-1}) }
+              className={`${ newIndex === i? 'active': '' } list-group-item list-group-item-action cursor`}
+              style={{ color: 'black' }}
+            >
+              <i className={`${ newIndex === i? 'text-white': '' } far fa-play-circle align-middle play_song`} style={{ fontSize: '30px', marginRight: '10px' }}></i>
+              <span className={`${ newIndex === i? 'text-white': '' } align-middle`}>{ e.name }</span>
+            </span>
           ))
         :null }
         </div>

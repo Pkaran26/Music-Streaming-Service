@@ -38,7 +38,8 @@ const Music = ()=>{
           returnFunc={ (e)=> setSelectedAlbum(e) }
         />
       </div>
-      <div className="row" style={{ position: 'fixed', bottom: '15px', left: '10px', right: '0' }}>
+      { selectedSong && selectedSong._id?
+        <div className="row" style={{ position: 'fixed', bottom: '15px', left: '10px', right: '0' }}>
         <div className="col-lg-8 col-md-8">
           <div className="card border-success" style={{ marginTop: '15px'}}>
             <div className="card-body" style={{ padding: '5px' }}>
@@ -50,6 +51,7 @@ const Music = ()=>{
           </div>
         </div>
       </div>
+      :null }
     </div>
   )
 }

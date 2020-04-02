@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react'
 
 const Album = ({ albums, returnFunc })=>{
 
+  useEffect(()=>{
+    if(albums && albums.length>0){
+      returnFunc(albums[0])
+    }
+  }, [albums])
+
   return(
     <div className="card border-light">
       <div className="card-body" style={{ height: '400px', overflow: 'auto' }}>
@@ -43,7 +49,7 @@ const Search = ()=>{
             placeholder="search something here..."
           />
           <div className="input-group-append">
-            <input type="submit" value="Search" />
+            <input type="submit" value="Search" className="btn btn-primary" />
           </div>
         </div>
       </div>
