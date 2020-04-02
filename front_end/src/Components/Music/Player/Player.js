@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
 
 const Player = ({ songDetail, changeSong })=>{
   const [play, setPlay] = useState(false)
@@ -130,7 +129,7 @@ const Player = ({ songDetail, changeSong })=>{
             className={`fas fa-step-forward marlr10 ${ song.index === song.total? 'text-secondary': 'cursor' }`}>
           </i>
         </p>
-        <p style={{ margin: 0, margin: '10px 33px 0px', textAlign: 'center' }}>
+        <p style={{ margin: '10px 33px 0px', textAlign: 'center' }}>
           <input
             type="range"
             min={ 0 } max={ 1 }
