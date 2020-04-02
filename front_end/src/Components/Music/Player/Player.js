@@ -7,6 +7,7 @@ const Player = ({ songDetail, changeSong })=>{
   const [time, setTime] = useState('--:--')
   const [totalTime, setTotalTime] = useState('--:--')
   const [width, setWidth] = useState(0)
+  const [repeat, setRepeat] = useState(false)
   const [audio] = useState(new Audio());
 
   const audioRef = useRef()
@@ -53,13 +54,26 @@ const Player = ({ songDetail, changeSong })=>{
         setTime(`${ current.minutes }:${ current.seconds }`)
         setTotalTime(`${ duration.minutes }:${ duration.seconds }`)
       }
+
+      audioRef.current.onended = ()=>{
+        setPlay(false)
+        audioRef.current.currentTime = 0
+        setWidth(0)
+
+        if(repeat){
+          setPlay(true)
+        }else {
+          nextSong()
+        }
+      }
+
       if(play){
        audioRef.current.play()
       }else {
        audioRef.current.pause()
       }
     }
-  }, [play, audioRef])
+  }, [play, audioRef, repeat])
 
   const setSeek = (w)=>{
     setWidth(w)
@@ -67,11 +81,15 @@ const Player = ({ songDetail, changeSong })=>{
   }
 
   const forwardSong = ()=>{
-    audioRef.current.currentTime += 10
+    if(audioRef.current.duration > audioRef.current.currentTime){
+      audioRef.current.currentTime += 10
+    }
   }
 
   const backwardSong = ()=>{
-    audioRef.current.currentTime -= 10
+    if(audioRef.current.currentTime > 0){
+      audioRef.current.currentTime -= 10
+    }
   }
 
   const nextSong = ()=>{
@@ -93,8 +111,7 @@ const Player = ({ songDetail, changeSong })=>{
       </div>
       <div className="col-lg-3 text-center">
         <audio ref={ audioRef } src={ soundfile } autoPlay/>
-        <p style={{ margin: 0, marginTop: '18px' }}>
-
+        <p style={{ margin: 0, marginTop: '5px' }}>
           <i
             onClick={ prevSong }
             className={`fas fa-step-backward marlr10 ${ song.index === 0? 'text-secondary': 'cursor' }`}
@@ -114,6 +131,12 @@ const Player = ({ songDetail, changeSong })=>{
           <i
             onClick={ nextSong }
             className={`fas fa-step-forward marlr10 ${ song.index === song.total? 'text-secondary': 'cursor' }`}
+          ></i>
+        </p>
+        <p style={{ margin: 0, margin: '0px 33px 0px', textAlign: 'right' }}>
+          <i
+            className={`fas fa-retweet marlr10 cursor text-${ repeat? 'info' : 'secondary' }`}
+            onClick={ ()=> setRepeat(!repeat) }
           ></i>
         </p>
       </div>
