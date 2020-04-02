@@ -1,0 +1,28 @@
+.spin {
+    position: absolute;
+    left: 12px;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.cursor{
+  cursor: pointer;
+}
+
+.play{
+  font-size: 50px !important;
+}
+
+.marlr10{
+  font-size: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.marlr10:active {
+  color: lightgray;
+}
