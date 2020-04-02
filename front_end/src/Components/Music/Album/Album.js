@@ -16,12 +16,10 @@ const Album = ({ albums, returnFunc })=>{
           { albums?
             albums.map((e, i)=>(
               <div className="col-lg-4" key={ i } style={{ marginBottom: '25px' }}>
-                <div className="card border-success cursor" onClick={ ()=> returnFunc(e) }>
+                <div className="card border-success cursor album" onClick={ ()=> returnFunc(e) }>
                   <div className="card-body text-center">
                     <i style={{ fontSize: '65px', padding: '5px' }} className="fas fa-compact-disc"></i>
-                    <p>
-                      <strong>{ e.name }</strong>
-                    </p>
+                    <p>{ e.name }</p>
                     <span>{ e.release_date }</span>
                   </div>
                 </div>

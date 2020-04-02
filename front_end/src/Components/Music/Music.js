@@ -42,9 +42,9 @@ const Music = ()=>{
         />
       </div>
       { selectedSong && selectedSong._id?
-        <div className="row" style={{ position: 'fixed', bottom: '15px', left: '10px', right: '0' }}>
+        <div className="row" style={{ position: 'fixed', zIndex: '10', bottom: '0', left: '10px', right: '0' }}>
         <div className="col-lg-8 col-md-8">
-          <div className="card border-success" style={{ marginTop: '15px'}}>
+          <div className="card bg-success" style={{ marginTop: '15px'}}>
             <div className="card-body" style={{ padding: '5px' }}>
               <Player
                 songDetail={ selectedSong }

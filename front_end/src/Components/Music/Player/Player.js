@@ -108,7 +108,9 @@ const Player = ({ songDetail, changeSong })=>{
   return(
     <div className="row">
       <div className="col-lg-1 text-center" style={{ position: 'relative' }}>
-        <i style={{ fontSize: '65px', padding: '5px' }} className={`fas fa-compact-disc ${ play? 'spin' : '' }`}></i>
+        <i style={{ fontSize: '65px', padding: '5px' }}
+          className={`fas fa-compact-disc remShadow ${ play? 'spin' : '' }`}>
+        </i>
       </div>
       <div className="col-lg-3 text-center">
         <audio ref={ audioRef } src={ soundfile } autoPlay/>
@@ -142,8 +144,8 @@ const Player = ({ songDetail, changeSong })=>{
       </div>
       { song?
         <div className="col-lg-6">
-          <p style={{ margin: 0 }}>{ song.name } </p>
-          <small>{`${ song.album[0].name } ${ song.album[0].release_date }`}</small>
+          <p style={{ margin: 0, color: '#fff', fontWeight: '600' }}>{ song.name } </p>
+          <small style={{ color: '#fff' }}>{`${ song.album[0].name } ${ song.album[0].release_date }`}</small>
           <p style={{ margin: 0, marginBottom: '5px' }}>
             <span className="badge badge-primary">{ time } | { totalTime }</span>
             <i className={`fas fa-retweet marlr10 cursor text-${ repeat? 'info' : 'secondary' }`}
@@ -184,9 +186,9 @@ const Progressbar = ({ width, setSeek })=>{
   useEffect(barRefFunc, [barRef])
 
   return(
-    <div ref={ barRef } className="progress" style={{ border: '1px solid #20c997' }}>
+    <div ref={ barRef } className="progress" style={{ border: '1px solid #2C3E50' }}>
       <div
-        className="progress-bar bg-success"
+        className="progress-bar bg-primary"
         role="progressbar"
         style={{ width: `${ currentWidth }%` }}
         aria-valuenow={ currentWidth }
