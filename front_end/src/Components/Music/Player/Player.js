@@ -171,17 +171,18 @@ const Progressbar = ({ width, setSeek })=>{
     setCurrentWidth(width)
   }, [width])
 
-  useEffect(()=>{
+  const barRefFunc = ()=>{
     if(barRef && barRef.current){
-      barRef.current.addEventListener("click", seek);
+      barRef.current.addEventListener("click", (e)=>{
+        const w = e.offsetX / barRef.current.offsetWidth *100
+        setSeek(w)
+        setCurrentWidth(w)
+      });
     }
-  }, [barRef])
-
-  const seek = (e)=>{
-    const w = e.offsetX / barRef.current.offsetWidth *100
-    setSeek(w)
-    setCurrentWidth(w)
   }
+
+  useEffect(barRefFunc, [barRef])
+
   return(
     <div ref={ barRef } className="progress" style={{ border: '1px solid #20c997' }}>
       <div

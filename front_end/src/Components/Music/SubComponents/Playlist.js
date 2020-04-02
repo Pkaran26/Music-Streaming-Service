@@ -23,7 +23,7 @@ const Playlist = ({ album, returnFunc, newIndex })=>{
     if(newIndex>-1){
       returnFunc({...songs[newIndex], index: newIndex, total: songs.length-1})
     }
-  }, [newIndex])
+  }, [newIndex, songs])
 
   return(
     <div className="card border-success">
