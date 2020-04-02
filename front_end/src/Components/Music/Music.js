@@ -35,7 +35,10 @@ const Music = ()=>{
       <div className="col-lg-8 col-md-8">
         <Album
           albums={ albums }
-          returnFunc={ (e)=> setSelectedAlbum(e) }
+          returnFunc={ (e)=> {
+            setSelectedAlbum(e)
+            setIndex(0)
+          } }
         />
       </div>
       { selectedSong && selectedSong._id?

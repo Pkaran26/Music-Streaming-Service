@@ -9,9 +9,9 @@ const Playlist = ({ album, returnFunc, newIndex })=>{
       axios.get(`http://localhost:3005/song/album/${ album._id }`)
       .then(res=>{
         setSongs(res.data)
-        // setTimeout(()=>{
-        //   returnFunc({...res.data[0], index: 0, total: res.data - 1})
-        // }, 100)
+        setTimeout(()=>{
+          returnFunc({...res.data[0], index: 0, total: res.data.length - 1})
+        }, 100)
       })
       .catch(err=>{
         console.log(err)
