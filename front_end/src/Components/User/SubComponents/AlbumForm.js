@@ -4,7 +4,7 @@ import moment from 'moment'
 const AlbumForm = ()=>{
   const [payload, setPayload] = useState({
     name : "",
-    release_date" : "",
+    release_date : "",
     thumb: "",
     created_at: moment().format('DD-MM-YYYY hh:mm A')
   })
