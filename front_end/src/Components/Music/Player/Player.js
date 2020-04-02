@@ -6,6 +6,7 @@ const Player = ({ songDetail, changeSong })=>{
   const [song, setSong] = useState('')
   const [time, setTime] = useState('--:--')
   const [totalTime, setTotalTime] = useState('--:--')
+  const [volume, setVolume] = useState(0.5)
   const [width, setWidth] = useState(0)
   const [repeat, setRepeat] = useState(false)
   const [audio] = useState(new Audio());
@@ -43,6 +44,7 @@ const Player = ({ songDetail, changeSong })=>{
 
   useEffect(()=>{
     if(audioRef && audioRef.current){
+      audioRef.current.volume = volume
       audioRef.current.ontimeupdate = ()=>{
         const currentTime = audioRef.current.currentTime
         const total = audioRef.current.duration
@@ -73,7 +75,7 @@ const Player = ({ songDetail, changeSong })=>{
        audioRef.current.pause()
       }
     }
-  }, [play, audioRef, repeat])
+  }, [play, audioRef, repeat, volume])
 
   const setSeek = (w)=>{
     setWidth(w)
@@ -112,40 +114,42 @@ const Player = ({ songDetail, changeSong })=>{
       <div className="col-lg-3 text-center">
         <audio ref={ audioRef } src={ soundfile } autoPlay/>
         <p style={{ margin: 0, marginTop: '5px' }}>
-          <i
-            onClick={ prevSong }
+          <i onClick={ prevSong }
             className={`fas fa-step-backward marlr10 ${ song.index === 0? 'text-secondary': 'cursor' }`}
           ></i>
-          <i
-            onClick={ backwardSong }
-            className="fas fa-backward cursor marlr10"
-          ></i>
-          <i
-            className={`fas cursor play text-primary marlr10 ${ play? 'fa-pause-circle': 'fa-play-circle' } `}
-            onClick={ ()=> setPlay(!play) }
-          ></i>
-          <i
-            onClick={ forwardSong }
-            className="fas fa-forward cursor marlr10"
-          ></i>
-          <i
-            onClick={ nextSong }
-            className={`fas fa-step-forward marlr10 ${ song.index === song.total? 'text-secondary': 'cursor' }`}
-          ></i>
+          <i onClick={ backwardSong }
+            className="fas fa-backward cursor marlr10">
+          </i>
+          <i className={`fas cursor play text-primary marlr10 ${ play? 'fa-pause-circle': 'fa-play-circle' } `}
+            onClick={ ()=> setPlay(!play) }>
+          </i>
+          <i onClick={ forwardSong }
+            className="fas fa-forward cursor marlr10">
+          </i>
+          <i onClick={ nextSong }
+            className={`fas fa-step-forward marlr10 ${ song.index === song.total? 'text-secondary': 'cursor' }`}>
+          </i>
         </p>
-        <p style={{ margin: 0, margin: '0px 33px 0px', textAlign: 'right' }}>
-          <i
-            className={`fas fa-retweet marlr10 cursor text-${ repeat? 'info' : 'secondary' }`}
-            onClick={ ()=> setRepeat(!repeat) }
-          ></i>
+        <p style={{ margin: 0, margin: '10px 33px 0px', textAlign: 'center' }}>
+          <input
+            type="range"
+            min={ 0 } max={ 1 }
+            step={ 0.1 }
+            value={ volume }
+            onChange={ (e)=> setVolume(e.target.value) }
+            className="custom-range" id="customRange1"
+          />
         </p>
       </div>
       { song?
         <div className="col-lg-6">
-          <p style={{ margin: 0 }}>{ song.name }</p>
+          <p style={{ margin: 0 }}>{ song.name } </p>
           <small>{`${ song.album[0].name } ${ song.album[0].release_date }`}</small>
           <p style={{ margin: 0, marginBottom: '5px' }}>
             <span className="badge badge-primary">{ time } | { totalTime }</span>
+            <i className={`fas fa-retweet marlr10 cursor text-${ repeat? 'info' : 'secondary' }`}
+              onClick={ ()=> setRepeat(!repeat) }>
+            </i>
           </p>
           <Progressbar
             width={ width }
@@ -153,6 +157,9 @@ const Player = ({ songDetail, changeSong })=>{
           />
         </div>
       :null }
+      <div className="col-lg-2">
+
+      </div>
     </div>
   )
 }
