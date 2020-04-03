@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { SERVER_URL } from '../../Utils/Urls'
 
 const Playlist = ({ album, returnFunc, newIndex })=>{
   const [songs, setSongs] = useState([])
 
   useEffect(()=>{
     if(album && album._id){
-      axios.get(`http://localhost:3005/song/album/${ album._id }`)
+      axios.get(`${ SERVER_URL }/song/album/${ album._id }`)
       .then(res=>{
         setSongs(res.data)
         setTimeout(()=>{

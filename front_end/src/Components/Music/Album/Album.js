@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const Album = ({ albums, returnFunc })=>{
+const Album = ({ albums, returnFunc, searchFunc })=>{
 
   useEffect(()=>{
     if(albums && albums.length>0){
@@ -11,7 +11,9 @@ const Album = ({ albums, returnFunc })=>{
   return(
     <div className="card border-light">
       <div className="card-body" style={{ height: '400px', overflow: 'auto' }}>
-        <Search />
+        <Search
+          searchFunc={ searchFunc }
+        />
         <div className="row">
           { albums?
             albums.map((e, i)=>(
@@ -32,26 +34,23 @@ const Album = ({ albums, returnFunc })=>{
   )
 }
 
-const Search = ()=>{
+const Search = ({ searchFunc })=>{
   const [search, setSearch] = useState('')
 
   return(
-    <form method="post">
-      <div className="form-group">
-        <div className="input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            value={ search }
-            onChange={ (e)=> setSearch(e.target.value) }
-            placeholder="search something here..."
-          />
-          <div className="input-group-append">
-            <input type="submit" value="Search" className="btn btn-primary" />
-          </div>
-        </div>
-      </div>
-    </form>
+    <div className="form-group">
+      <input
+        type="text"
+        className="form-control"
+        value={ search }
+        onChange={ (e)=> {
+          searchFunc(e.target.value)
+          setSearch(e.target.value)
+        } }
+        placeholder="search something here..."
+        required={ true }
+      />
+    </div>
   )
 }
 

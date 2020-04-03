@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { SERVER_URL } from '../../Utils/Urls'
 
 const Song = ({ selectedAlbum })=>{
   const [songs, setSongs] = useState([])
 
   useEffect(()=>{
     if(selectedAlbum && selectedAlbum._id){
-      axios.get(`http://localhost:3005/song/album/${ selectedAlbum._id }`)
+      axios.get(`${ SERVER_URL }/song/album/${ selectedAlbum._id }`)
       .then(res=>{
         setSongs(res.data)
       })

@@ -3,22 +3,35 @@ import Album from './Album/Album'
 import Playlist from './SubComponents/Playlist'
 import Player from './Player/Player'
 import axios from 'axios'
+import { SERVER_URL } from '../Utils/Urls'
 
 const Music = ()=>{
   const [albums, setAlbums] = useState([])
   const [selectedAlbum, setSelectedAlbum] = useState('')
   const [selectedSong, setSelectedSong] = useState('')
   const [index, setIndex] = useState(0)
+  const [search, setSearch] = useState('')
+  const [skip, setSkip] = useState(0)
+
+  const searchFunc = (search)=>{
+    setSearch(search)
+  }
 
   useEffect(()=>{
-    axios.post(`http://localhost:3005/album/list/0`)
+    let payload = {}
+    if(search){
+      payload = {
+        name: search
+      }
+    }
+    axios.post(`${ SERVER_URL }/album/list/${ skip }`, payload)
     .then(res=>{
       setAlbums(res.data)
     })
     .catch(err=>{
       console.log(err)
     })
-  }, [])
+  }, [search])
 
   return(
     <div className="row">
@@ -39,6 +52,7 @@ const Music = ()=>{
             setSelectedAlbum(e)
             setIndex(0)
           } }
+          searchFunc={ searchFunc }
         />
       </div>
       { selectedSong && selectedSong._id?

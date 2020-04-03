@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { SERVER_URL } from '../Utils/Urls'
 import Album from './SubComponents/Album'
 import Song from './SubComponents/Song'
-
 
 const Dashboard = ()=>{
   const [albums, setAlbums] = useState([])
   const [selectedAlbum, setSelectedAlbum] = useState('')
 
   useEffect(()=>{
-    axios.post(`http://localhost:3005/album/list/0`)
+    axios.post(`${ SERVER_URL }/album/list/0`)
     .then(res=>{
       setAlbums(res.data)
     })
