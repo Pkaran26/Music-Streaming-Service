@@ -36,20 +36,33 @@ const Album = ({ albums, returnFunc, searchFunc })=>{
 
 const Search = ({ searchFunc })=>{
   const [search, setSearch] = useState('')
+  const [key, setKey] = useState('name')
 
   return(
-    <div className="form-group">
-      <input
-        type="text"
-        className="form-control"
-        value={ search }
-        onChange={ (e)=> {
-          searchFunc(e.target.value)
-          setSearch(e.target.value)
-        } }
-        placeholder="search something here..."
-        required={ true }
-      />
+    <div class="form-group">
+      <div class="input-group">
+        <input
+          type="text"
+          className="form-control"
+          value={ search }
+          onChange={ (e)=> {
+            searchFunc(e.target.value, key)
+            setSearch(e.target.value)
+          } }
+          placeholder="search something here..."
+          required={ true }
+        />
+        <div class="input-group-append">
+          <select
+            className="form-control"
+            value={ key }
+            onChange={ (e)=> setKey(e.target.value) }
+          >
+            <option value="name">Album Name</option>
+            <option value="release_date">Release date</option>
+          </select>
+        </div>
+      </div>
     </div>
   )
 }

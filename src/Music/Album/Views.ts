@@ -28,8 +28,20 @@ export class AlbumView {
   async getAlbum(payload: any, skip: string, callback: Function){
     try {
       DBPool( async (db: any)=>{
+        let newPayload = {
+          ...payload
+        }
+        if(payload.name){
+          newPayload = {
+            name: new RegExp(payload.name, 'i')
+          }
+        }else if(payload.release_date){
+          newPayload = {
+            release_date: new RegExp(payload.release_date, 'i')
+          }
+        }
         const res = await db.collection(`${ ALBUM }`).aggregate([
-        { $match: { ...payload } },
+        { $match: { ...newPayload } },
         { $skip: Number(skip) },
         { $limit: 10 }
       ])
