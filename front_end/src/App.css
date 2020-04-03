@@ -57,3 +57,26 @@
   background: #18BC9C;
   border-radius: 2px;
 }
+
+.searchResult {
+  position: absolute;
+  padding: 10px;
+  z-index: 10;
+  background-color: #2C3E50;
+  color: #fff;
+  border: 1px solid #18BC9C;
+  border-top: 0;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 0 2px grey;
+  width: 100%;
+}
+
+.searchResult > ul{
+  margin: 0;
+  padding: 0;
+}
+
+.searchResult > ul > li{
+  list-style: none;
+  margin-bottom: 10px;
+}

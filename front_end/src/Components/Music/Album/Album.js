@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import Search from './Search'
 
-const Album = ({ albums, returnFunc, searchFunc })=>{
+const Album = ({ albums, returnFunc })=>{
 
   useEffect(()=>{
     if(albums && albums.length>0){
@@ -12,7 +13,7 @@ const Album = ({ albums, returnFunc, searchFunc })=>{
     <div className="card border-light">
       <div className="card-body" style={{ height: '400px', overflow: 'auto' }}>
         <Search
-          searchFunc={ searchFunc }
+          searchFunc={ returnFunc }
         />
         <div className="row">
           { albums?
@@ -30,26 +31,6 @@ const Album = ({ albums, returnFunc, searchFunc })=>{
           :null }
         </div>
       </div>
-    </div>
-  )
-}
-
-const Search = ({ searchFunc })=>{
-  const [search, setSearch] = useState('')
-
-  return(
-    <div class="form-group">
-      <input
-        type="text"
-        className="form-control"
-        value={ search }
-        onChange={ (e)=> {
-          searchFunc(e.target.value)
-          setSearch(e.target.value)
-        } }
-        placeholder="search something here..."
-        required={ true }
-      />
     </div>
   )
 }
