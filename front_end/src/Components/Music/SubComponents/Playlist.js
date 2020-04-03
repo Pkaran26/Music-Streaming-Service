@@ -41,7 +41,8 @@ const Playlist = ({ album, returnFunc, newIndex })=>{
               className={`${ newIndex === i? 'active': '' } list-group-item list-group-item-action cursor`}
               style={{ color: 'black' }}
             >
-              <i className={`${ newIndex === i? 'text-white': '' } far fa-play-circle align-middle play_song`} style={{ fontSize: '30px', marginRight: '10px' }}></i>
+              <i className={`${ newIndex === i? 'text-white': '' } far fa-play-circle align-middle play_song`} style={{ fontSize: '20px', marginRight: '5px' }}></i>
+              <img style={{ width: '30px', borderRadius: '5px', marginRight: '5px' }} src={`data:${e.thumb.contentType};base64,${e.thumb.data}`} />
               <span className={`${ newIndex === i? 'text-white': '' } align-middle`}>{ e.name }</span>
             </span>
           ))
