@@ -6,6 +6,7 @@ import { successRes, errorRes } from "../../Utils/Responses";
 import fs from 'fs';
 import path from 'path';
 import * as mm from 'music-metadata';
+import moment from 'moment'
 
 const SongRouter = Router();
 const _songView = new SongView();
@@ -25,7 +26,7 @@ SongRouter.post('/add', async (req: Request, res: Response)=>{
   }
 });
 
-SongRouter.post('/addsong', (req: any, res: Response)=>{
+SongRouter.post('/addsong/:album_id', (req: any, res: Response)=>{
   try {
     if(req.files && req.files.song){
       const url = `${ dirname }/files/${ req.files.song.name }`;
@@ -36,14 +37,20 @@ SongRouter.post('/addsong', (req: any, res: Response)=>{
           res.json(errorRes('song not upload'))
         }
         mm.parseFile(url)
-        .then( metadata => {
+        .then( async (metadata) => {
           const { artist, album, year, genre, picture } = metadata.common
-          // await _albumView.createAlbum(req.body, (result:any)=>{
-          //   res.json(result);
-          // });
-          console.log(artist, album, year, genre, picture);
+          const payload = {
+            artist: artist? artist.toString(): '',
+            year: year? year.toString(): '',
+            name: req.files.song.name,
+            album: new ObjectId(req.params.album_id),
+            thumb: 'no',
+            created_at: '2020-04-26'
+          }
+          await _songView.addSong(payload, (result:any)=>{
+            res.json(result);
+          });
         })
-        res.json(successRes({ message: 'uploaded' }))
       });
     }
   } catch (err) {
