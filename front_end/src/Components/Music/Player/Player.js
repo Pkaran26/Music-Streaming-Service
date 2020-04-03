@@ -159,7 +159,9 @@ const Player = ({ songDetail, changeSong })=>{
         </div>
       :null }
       <div className="col-lg-2">
-
+        { song.thumb && song.thumb.contentType?
+          <img style={{ width: '100%' }} src={`data:${song.thumb.contentType};base64,${song.thumb.data}`} />
+        :null}
       </div>
     </div>
   )
