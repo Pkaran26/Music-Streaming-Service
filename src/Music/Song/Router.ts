@@ -39,12 +39,17 @@ SongRouter.post('/addsong/:album_id', (req: any, res: Response)=>{
         mm.parseFile(url)
         .then( async (metadata) => {
           const { artist, album, year, genre, picture } = metadata.common
+          const data = picture && picture[0] && picture[0].data? picture[0].data : '';
+          const format = picture && picture[0] && picture[0].format? picture[0].format : '';
           const payload = {
             artist: artist? artist.toString(): '',
             year: year? year.toString(): '',
             name: req.files.song.name,
             album: new ObjectId(req.params.album_id),
-            thumb: 'no',
+            thumb: {
+              data: data,
+              contentType: format
+            },
             created_at: '2020-04-26'
           }
           await _songView.addSong(payload, (result:any)=>{

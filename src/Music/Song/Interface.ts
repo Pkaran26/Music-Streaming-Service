@@ -5,6 +5,6 @@ export interface Song {
   year: string,
   name: string,
   album: ObjectId,
-  thumb: string,
+  thumb: any,
   created_at: string
 }
