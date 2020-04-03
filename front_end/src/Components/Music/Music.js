@@ -11,19 +11,17 @@ const Music = ()=>{
   const [selectedSong, setSelectedSong] = useState('')
   const [index, setIndex] = useState(0)
   const [search, setSearch] = useState('')
-  const [key, setKey] = useState('')
   const [skip, setSkip] = useState(0)
 
-  const searchFunc = (search, k)=>{
+  const searchFunc = (search)=>{
     setSearch(search)
-    setKey(k)
   }
 
   useEffect(()=>{
     let payload = {}
     if(search){
       payload = {
-        [key]: search
+        search: search
       }
     }
     axios.post(`${ SERVER_URL }/album/list/${ skip }`, payload)

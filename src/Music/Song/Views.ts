@@ -27,9 +27,17 @@ export class SongView {
 
   async getSong(payload: any, skip: string, callback: Function){
     try {
+      let newPayload = {
+        ...payload
+      }
+      if(payload.name){
+        newPayload = {
+          name: new RegExp(payload.name, 'i')
+        }
+      }
       DBPool( async (db: any)=>{
         const res = await db.collection(`${ SONG }`).aggregate([
-        { $match: { ...payload } },
+        { $match: { ...newPayload } },
         { $lookup: {
           from: "album",
           localField: "album",

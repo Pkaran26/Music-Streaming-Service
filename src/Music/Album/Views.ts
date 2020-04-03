@@ -31,13 +31,12 @@ export class AlbumView {
         let newPayload = {
           ...payload
         }
-        if(payload.name){
+        if(payload.search){
           newPayload = {
-            name: new RegExp(payload.name, 'i')
-          }
-        }else if(payload.release_date){
-          newPayload = {
-            release_date: new RegExp(payload.release_date, 'i')
+            $or: [
+              { name: new RegExp(payload.search, 'i') },
+              { release_date: new RegExp(payload.search, 'i') }
+            ]
           }
         }
         const res = await db.collection(`${ ALBUM }`).aggregate([
