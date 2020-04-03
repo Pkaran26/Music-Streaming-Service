@@ -1,17 +1,14 @@
 import { Request, Response, Router } from 'express';
 import { SongView } from './Views';
 import { ObjectId } from "mongodb";
-import { Upload } from "../../Utils/Upload";
 import { dirname } from "../../Dir";
 import { successRes, errorRes } from "../../Utils/Responses";
 import fs from 'fs';
 import path from 'path';
+import * as mm from 'music-metadata';
 
 const SongRouter = Router();
 const _songView = new SongView();
-
-const _upload = new Upload(dirname);
-const _uploader = _upload.uploader();
 
 SongRouter.post('/add', async (req: Request, res: Response)=>{
   try {
@@ -28,15 +25,27 @@ SongRouter.post('/add', async (req: Request, res: Response)=>{
   }
 });
 
-SongRouter.post('/addsong', (req: Request, res: Response)=>{
+SongRouter.post('/addsong', (req: any, res: Response)=>{
   try {
-    _uploader(req, res, (err: any)=>{
-      if(!err){
+    if(req.files && req.files.song){
+      const url = `${ dirname }/files/${ req.files.song.name }`;
+
+      req.files.song.mv(url, function(err: any) {
+        if (err){
+          console.log(err);
+          res.json(errorRes('song not upload'))
+        }
+        mm.parseFile(url)
+        .then( metadata => {
+          const { artist, album, year, genre, picture } = metadata.common
+          // await _albumView.createAlbum(req.body, (result:any)=>{
+          //   res.json(result);
+          // });
+          console.log(artist, album, year, genre, picture);
+        })
         res.json(successRes({ message: 'uploaded' }))
-      }else{
-        res.json(errorRes('song not upload'))
-      }
-    });
+      });
+    }
   } catch (err) {
     console.log(err);
     res.json(errorRes('error'))
